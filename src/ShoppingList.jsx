@@ -4,10 +4,15 @@ import note from "./images/note.png";
 import Button from "./Button";
 import List from "./List";
 import "./style.css";
+import { FaPlus } from "react-icons/fa6";
 
 function ShoppingList() {
   const [input, setInput] = useState("");
-  const [shoppingList, setShoppingList] = useState([]);
+  const [shoppingList, setShoppingList] = useState([
+    "cereal",
+    "banana",
+    "apple",
+  ]);
 
   const handleChange = (event) => {
     setInput(event.target.value);
@@ -23,11 +28,16 @@ function ShoppingList() {
     setInput("");
   };
 
-  const handleClick = () => {};
-
   const handleClearAll = () => {
     setShoppingList([]);
   };
+
+  const handleDelete = (toDeleteIndex) => {
+    const newList = shoppingList.filter((li, idx) => idx !== toDeleteIndex);
+    setShoppingList(newList);
+  };
+
+  const handleEdit = (index) => {};
 
   return (
     <div className="container">
@@ -45,7 +55,8 @@ function ShoppingList() {
             className="form-input"
           />
           <div className="form-control">
-            <Button onClick={handleClick} className="btn">
+            <Button className="btn">
+              <FaPlus />
               Add Item
             </Button>
           </div>
@@ -56,7 +67,7 @@ function ShoppingList() {
         <Input className="form-input-filter" placeholder="Filter Items" />
       </div>
       <div>
-        <List shoppingList={shoppingList} />
+        <List handleDelete={handleDelete} shoppingList={shoppingList} />
       </div>
       <div>
         <Button className="btn-clear" onClick={handleClearAll}>
