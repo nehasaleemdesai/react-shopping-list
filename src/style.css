@@ -124,6 +124,21 @@ header h1 {
   cursor: pointer;
 }
 
+.items li div {
+  display: flex;
+  width: 40px;
+  margin-top: 2px;
+  justify-content: space-between;
+}
+
+.update-btn {
+  background-color: #228b22;
+}
+
+.line-through {
+  text-decoration: line-through;
+}
+
 @media (max-width: 500px) {
   .items li {
     width: 100%;

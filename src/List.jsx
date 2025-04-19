@@ -2,16 +2,39 @@ import React from "react";
 import { IoIosCloseCircle } from "react-icons/io";
 import { TbEdit } from "react-icons/tb";
 
-function List({ shoppingList, handleDelete, handleEdit }) {
-  const listItems = shoppingList.map((li, index) => {
+function List({
+  shoppingList,
+  handleDelete,
+  handleEdit,
+  editIndex,
+  handleComplete,
+  completedIndexes,
+  filterInput,
+}) {
+  const filteredList = shoppingList.filter((item) =>
+    item.toLowerCase().includes(filterInput.toLowerCase())
+  );
+
+  const listItems = filteredList.map((li, index) => {
     return (
-      <li>
-        {li}
-        <IoIosCloseCircle onClick={() => handleDelete(index)} />
-        <TbEdit onClick={() => handleEdit(index)} />
+      <li
+        onClick={() => handleComplete(index)}
+        className={index === editIndex ? "edit-mode" : ""}
+        key={index}
+      >
+        <span
+          className={completedIndexes.includes(index) ? "line-through" : ""}
+        >
+          {li}
+        </span>
+        <div>
+          <IoIosCloseCircle onClick={() => handleDelete(index)} />
+          <TbEdit onClick={() => handleEdit(index)} />
+        </div>
       </li>
     );
   });
+
   return (
     <div>
       <ul id="item-list" className="items">
