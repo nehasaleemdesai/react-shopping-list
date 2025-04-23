@@ -54,12 +54,14 @@ function ShoppingList() {
     setShoppingList([]);
   };
 
-  const handleDelete = (toDeleteIndex) => {
+  const handleDelete = (event, toDeleteIndex) => {
+    event.stopPropagation();
     const newList = shoppingList.filter((li, idx) => idx !== toDeleteIndex);
     setShoppingList(newList);
   };
 
-  const handleEdit = (index) => {
+  const handleEdit = (event, index) => {
+    event.stopPropagation();
     setInput(shoppingList[index]);
     setIsEditEnabled(true);
     setEditIndex(index);

@@ -28,8 +28,8 @@ function List({
           {li}
         </span>
         <div>
-          <IoIosCloseCircle onClick={() => handleDelete(index)} />
-          <TbEdit onClick={() => handleEdit(index)} />
+          <IoIosCloseCircle onClick={(event) => handleDelete(event, index)} />
+          <TbEdit onClick={(event) => handleEdit(event, index)} />
         </div>
       </li>
     );
