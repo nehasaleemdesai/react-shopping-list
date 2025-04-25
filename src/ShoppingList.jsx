@@ -1,4 +1,4 @@
-import React, { Component, useState } from "react";
+import React, { useState } from "react";
 import Input from "./Input";
 import note from "./images/note.png";
 import Button from "./Button";
@@ -18,6 +18,7 @@ function ShoppingList() {
   const [isEditEnabled, setIsEditEnabled] = useState(false);
   const [editIndex, setEditIndex] = useState(null);
   const [completedIndexes, setCompletedIndexes] = useState([]);
+  const [isDisabled, setIsDisabled] = useState(false);
 
   const handleChange = (event) => {
     setInput(event.target.value);
@@ -42,6 +43,7 @@ function ShoppingList() {
       //      - update shoppinglist state
       setShoppingList(editedList);
       setIsEditEnabled(false);
+      setIsDisabled(false);
       setEditIndex(null);
     } else {
       setShoppingList([...shoppingList, input]);
@@ -56,12 +58,16 @@ function ShoppingList() {
 
   const handleDelete = (event, toDeleteIndex) => {
     event.stopPropagation();
-    const newList = shoppingList.filter((li, idx) => idx !== toDeleteIndex);
-    setShoppingList(newList);
+    if (!isDisabled) {
+      const newList = shoppingList.filter((li, idx) => idx !== toDeleteIndex);
+      setShoppingList(newList);
+    }
   };
 
   const handleEdit = (event, index) => {
     event.stopPropagation();
+
+    setIsDisabled(true);
     setInput(shoppingList[index]);
     setIsEditEnabled(true);
     setEditIndex(index);
@@ -71,12 +77,13 @@ function ShoppingList() {
     let indexes = [...completedIndexes];
 
     // if index is already part of my completed indexes list; then we remove it; else add it
-    if (indexes.includes(index)) {
-      indexes = indexes.filter((val) => val !== index);
-    } else {
-      indexes.push(index);
+    if (!isDisabled) {
+      if (indexes.includes(index)) {
+        indexes = indexes.filter((val) => val !== index);
+      } else {
+        indexes.push(index);
+      }
     }
-
     // Update state
     setCompletedIndexes(indexes);
   };
@@ -96,9 +103,11 @@ function ShoppingList() {
             onChange={handleChange}
             className="form-input"
           />
-          <div className="form-control">
+          <div>
             <Button className={isEditEnabled ? "update-btn btn" : "btn"}>
-              {isEditEnabled ? <TbEdit /> : <FaPlus />}
+              <span className="btn-icons">
+                {isEditEnabled ? <TbEdit /> : <FaPlus />}
+              </span>
               {isEditEnabled ? "Update Item" : "Add Item"}
             </Button>
           </div>
@@ -122,6 +131,7 @@ function ShoppingList() {
           handleDelete={handleDelete}
           handleComplete={handleComplete}
           shoppingList={shoppingList}
+          isEditEnabled={isEditEnabled}
         />
       </div>
       <div>

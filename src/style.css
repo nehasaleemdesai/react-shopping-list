@@ -34,7 +34,31 @@ header h1 {
   padding: 20px;
 }
 
+@keyframes tilt-shaking {
+  0% {
+    transform: rotate(0deg);
+  }
+  25% {
+    transform: rotate(5deg);
+  }
+  50% {
+    transform: rotate(0eg);
+  }
+  75% {
+    transform: rotate(-5deg);
+  }
+  100% {
+    transform: rotate(0deg);
+  }
+}
+
 .edit-mode {
+  color: #fff5f5;
+  background-color: #ff6b6b;
+  animation: tilt-shaking 0.45s infinite;
+}
+
+.all-edit-mode {
   color: #ccc;
 }
 
@@ -63,6 +87,8 @@ header h1 {
 
 /* Buttons */
 .btn {
+  font-weight: 700;
+  letter-spacing: 1px;
   background-color: #333;
   color: #fff;
   border: none;
@@ -71,6 +97,9 @@ header h1 {
   cursor: pointer;
 }
 
+.btn-icons {
+  margin-right: 2px;
+}
 .btn:hover {
   background-color: #444;
 }
@@ -110,6 +139,7 @@ header h1 {
   margin-top: 20px;
   display: flex;
   flex-wrap: wrap;
+  justify-content: space-between;
 }
 
 .items li {

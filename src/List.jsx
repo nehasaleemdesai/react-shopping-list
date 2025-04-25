@@ -10,7 +10,18 @@ function List({
   handleComplete,
   completedIndexes,
   filterInput,
+  isEditEnabled,
 }) {
+  const listStyle = (index) => {
+    if (isEditEnabled) {
+      if (index === editIndex) {
+        console.log(index === editIndex);
+        return "edit-mode";
+      }
+      return "all-edit-mode";
+    }
+  };
+
   const filteredList = shoppingList.filter((item) =>
     item.toLowerCase().includes(filterInput.toLowerCase())
   );
@@ -18,8 +29,9 @@ function List({
   const listItems = filteredList.map((li, index) => {
     return (
       <li
+        className={listStyle(index)}
         onClick={() => handleComplete(index)}
-        className={index === editIndex ? "edit-mode" : ""}
+        // className={index === editIndex ? "edit-mode" : ""}
         key={index}
       >
         <span
